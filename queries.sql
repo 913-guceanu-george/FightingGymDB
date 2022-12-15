@@ -10,17 +10,17 @@ go
     SELECT *
     FROM Student s1
     WHERE s1.years_of_exp > 2
-INTERSECT
+UNION
     SELECT *
     FROM Student s2
     WHERE s2.full_name like 'D%'
 
 
 -- All students with daily payments
-    SELECT *
+    SELECT s1.stid
     FROM Student s1
-union all
-    select *
+UNION
+    select p1.stid
     from Payment p1
     WHERE daily = 1 OR memebership = 0
 
@@ -28,24 +28,22 @@ union all
 -- 2 queries with the intersection operation; use INTERSECT and IN;
 
 -- Theachers with diploma that teach classes, sorted alphabetically
-    select t1.tid, t1.full_name
+    select t1.tid
     from Teacher t1
     where diploma = 1
 intersect
-    select c1.tid, c1.class_name
+    select c1.tid
     from Class c1
-    where cid in (10, 11, 12)
 ORDER BY tid
 
 -- From the first 20 students, the one with gloves that are made of leather or syntetic, sorted alphabetically
-    select s1.stid, s1.full_name
-    from Student s1
-    where s1.stid between 1 and 17
-intersect
-    select g1.stid, g1.material
+    select g1.stid
     from Glove g1
-    where material in ('leather', 'syntetic')
-order by s1.full_name
+    where material in ('leather', 'synthetic')
+intersect
+    select s1.stid
+    from Student s1
+order by stid
 
 
 -- c
